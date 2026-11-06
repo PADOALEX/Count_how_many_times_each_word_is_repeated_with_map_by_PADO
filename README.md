@@ -1,17 +1,22 @@
-## Word Counter Program (C++)
-## Description:
-This program allows you to count how many times each word appears:
+# Word counter
 
-In the text input by the user manually.
+[![C++ CI](https://github.com/PADOALEX/Count_how_many_times_each_word_is_repeated_with_map_by_PADO/actions/workflows/ci.yml/badge.svg)](https://github.com/PADOALEX/Count_how_many_times_each_word_is_repeated_with_map_by_PADO/actions/workflows/ci.yml)
 
-In a text file specified by the user.
+Counts whitespace-separated, case-sensitive tokens from console input or a file. File tokens are counted as a stream rather than retained in a second collection.
 
-The program uses a map to store and count the occurrences of each word.
+## Build and run
 
-## Features:
-Option 1: Count words from standard input (user types the words).
+Install Visual Studio 2022 or later with the Desktop development with C++ workload, CMake 3.20+ and Python 3.12+ for regression tests. Run from the repository root on Windows:
 
-Option 2: Count words from a file (user specifies the file path).
+```powershell
+cmake -S . -B build
+cmake --build build --config Release
+ctest --test-dir build -C Release --output-on-failure
+.\build\Release\app.exe
+```
 
-Option 3: Exit the program.
+The original Visual Studio solution remains available. The CMake executable is named `app`; executable location depends on the selected generator. Automated tests use temporary directories for file-based scenarios and verify behavior with bounded subprocess timeouts.
 
+## Scope
+
+This is a single-user academic program, without a database, authentication or deployment. The original Windows console interface is preserved. Source text and console output now use UTF-8; CMake sets the MSVC source encoding explicitly.
