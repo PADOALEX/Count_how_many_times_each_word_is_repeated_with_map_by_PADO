@@ -7,50 +7,48 @@
 using namespace std;
 int main()
 {
-    SetConsoleOutputCP(1251);
-    SetConsoleCP(1251);
+    SetConsoleOutputCP(65001);
+    SetConsoleCP(65001);
     while (true)
     {
-        cout << "\n----- Ìåíþ -----\n";
-        cout << "1 - Ïîðàõóâàòè ñëîâà ç³ ñòàíäàðòíîãî ââîäó\n";
-        cout << "2 - Ïîðàõóâàòè ñëîâà ç ôàéëó\n";
-        cout << "3 - Âèéòè\n";
-        cout << "Îáåð³òü îïö³þ: ";
+        cout << "\n----- ÐœÐµÐ½ÑŽ -----\n";
+        cout << "1 - ÐŸÐ¾Ñ€Ð°Ñ…ÑƒÐ²Ð°Ñ‚Ð¸ ÑÐ»Ð¾Ð²Ð° Ð·Ñ– ÑÑ‚Ð°Ð½Ð´Ð°Ñ€Ñ‚Ð½Ð¾Ð³Ð¾ Ð²Ð²Ð¾Ð´Ñƒ\n";
+        cout << "2 - ÐŸÐ¾Ñ€Ð°Ñ…ÑƒÐ²Ð°Ñ‚Ð¸ ÑÐ»Ð¾Ð²Ð° Ð· Ñ„Ð°Ð¹Ð»Ñƒ\n";
+        cout << "3 - Ð’Ð¸Ð¹Ñ‚Ð¸\n";
+        cout << "ÐžÐ±ÐµÑ€Ñ–Ñ‚ÑŒ Ð¾Ð¿Ñ†Ñ–ÑŽ: ";
         int option;
         cin >> option;
+        if (cin.eof()) return 0;
         if (!cin)
         {
             cin.clear();
             cin.ignore(10000, '\n');
-            cout << "Íåâ³ðíå ââåäåííÿ.\n";
+            cout << "ÐÐµÐ²Ñ–Ñ€Ð½Ðµ Ð²Ð²ÐµÐ´ÐµÐ½Ð½Ñ.\n";
             continue;
         }
         if (option == 1)
         {
-            vector<string> words;
+            map<string, int> counter;
             string word;
             int count;
-            cout << "Ñê³ëüêè ñë³â âè õî÷åòå ââåñòè? ";
+            cout << "Ð¡ÐºÑ–Ð»ÑŒÐºÐ¸ ÑÐ»Ñ–Ð² Ð²Ð¸ Ñ…Ð¾Ñ‡ÐµÑ‚Ðµ Ð²Ð²ÐµÑÑ‚Ð¸? ";
             cin >> count;
+            if (cin.eof()) return 0;
             if (!cin || count <= 0)
             {
                 cin.clear();
                 cin.ignore(10000, '\n');
-                cout << "Íåâ³ðíå ÷èñëî ñë³â.\n";
+                cout << "ÐÐµÐ²Ñ–Ñ€Ð½Ðµ Ñ‡Ð¸ÑÐ»Ð¾ ÑÐ»Ñ–Ð².\n";
                 continue;
             }
-            cout << "Ââåä³òü " << count << " ñë³â:\n";
+            cout << "Ð’Ð²ÐµÐ´Ñ–Ñ‚ÑŒ " << count << " ÑÐ»Ñ–Ð²:\n";
             for (int i = 0; i < count; i++)
             {
-                cin >> word;
-                words.push_back(word);
+                if (!(cin >> word)) return 0;
+                ++counter[word];
             }
-            map<string, int> counter;
-            for (auto& w : words)
-            {
-                counter[w]++;
-            }
-            cout << "\nÐåçóëüòàò:\n";
+
+            cout << "\nÐ ÐµÐ·ÑƒÐ»ÑŒÑ‚Ð°Ñ‚:\n";
             for (auto& p : counter)
             {
                 cout << p.first << " - " << p.second << "\n";
@@ -59,29 +57,25 @@ int main()
         else if (option == 2)
         {
             cin.ignore(10000, '\n');
-            cout << "Ââåä³òü øëÿõ äî ôàéëó: ";
+            cout << "Ð’Ð²ÐµÐ´Ñ–Ñ‚ÑŒ ÑˆÐ»ÑÑ… Ð´Ð¾ Ñ„Ð°Ð¹Ð»Ñƒ: ";
             string filepath;
             getline(cin, filepath);
             ifstream file(filepath);
             if (!file.is_open())
             {
-                cerr << "Íå âäàëîñü â³äêðèòè ôàéë!\n";
+                cerr << "ÐÐµ Ð²Ð´Ð°Ð»Ð¾ÑÑŒ Ð²Ñ–Ð´ÐºÑ€Ð¸Ñ‚Ð¸ Ñ„Ð°Ð¹Ð»!\n";
             }
             else
             {
-                vector<string> words;
+                map<string, int> counter;
                 string word;
                 while (file >> word)
                 {
-                    words.push_back(word);
+                    ++counter[word];
                 }
                 file.close();
-                map<string, int> counter;
-                for (auto& w : words)
-                {
-                    counter[w]++;
-                }
-                cout << "\nÐåçóëüòàò:\n";
+
+                cout << "\nÐ ÐµÐ·ÑƒÐ»ÑŒÑ‚Ð°Ñ‚:\n";
                 for (auto& p : counter) {
                     cout << p.first << " - " << p.second << "\n";
                 }
@@ -90,12 +84,12 @@ int main()
         }
         else if (option == 3)
         {
-            cout << "Âèõ³ä.\n";
+            cout << "Ð’Ð¸Ñ…Ñ–Ð´.\n";
             break;
         }
         else
         {
-            cout << "Íåâ³ðíà îïö³ÿ!\n";
+            cout << "ÐÐµÐ²Ñ–Ñ€Ð½Ð° Ð¾Ð¿Ñ†Ñ–Ñ!\n";
         }
         cin.clear();
         cin.ignore(10000, '\n');
